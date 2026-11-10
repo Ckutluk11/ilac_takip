@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "800822565485",
+    "project_id": "ilactakip-f2ec7",
+    "storage_bucket": "ilactakip-f2ec7.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800822565485:android:f6376055ccaa758c26bd64",
+        "android_client_info": {
+          "package_name": "com.canerkutluk.ilactakip"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDw9kFfeuNHFyymo0iYcyhT3rnNpZvQPKg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

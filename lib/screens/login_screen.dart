@@ -99,8 +99,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       if (mounted) {
         setState(
           () => _successMessage =
-              '$email adresine şifre sıfırlama bağlantısı gönderildi. '
-              'Lütfen e-postanızı kontrol edin.',
+              // Firebase, güvenlik gereği adresin kayıtlı olup olmadığını
+              // söylemez; mesaj bu yüzden "kayıtlıysa" diye başlıyor.
+              'Bu adres kayıtlıysa $email adresine şifre sıfırlama bağlantısı '
+              'gönderildi. Gelen kutunuzu ve gereksiz (spam) klasörünü '
+              'kontrol edin.',
         );
       }
     } on AuthException catch (e) {

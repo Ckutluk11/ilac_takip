@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ilac_takip/main.dart';
+import 'package:ilac_takip/services/auth_providers.dart';
+import 'package:ilac_takip/services/fake_auth_service.dart';
 import 'package:ilac_takip/services/validators.dart';
 
 /// Uygulamayı uzun bir telefon ekranında açar (tüm form görünsün diye).
@@ -10,7 +12,15 @@ Future<void> pumpApp(WidgetTester tester) async {
   tester.view.devicePixelRatio = 1.0;
   addTearDown(tester.view.reset);
 
-  await tester.pumpWidget(const ProviderScope(child: IlacTakipApp()));
+  // Testler gerçek Firebase'e bağlanmaz; sahte servis kullanılır.
+  final fakeAuth = FakeAuthService();
+  addTearDown(fakeAuth.dispose);
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [authServiceProvider.overrideWithValue(fakeAuth)],
+      child: const IlacTakipApp(),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
