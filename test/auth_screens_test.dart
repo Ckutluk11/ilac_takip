@@ -170,16 +170,21 @@ void main() {
       expect(find.text('Şifre tekrarı'), findsNothing); // kayıt ekranı kapandı
     });
 
-    testWidgets('KVKK metni penceresi açılır', (tester) async {
+    testWidgets('KVKK metni ekranı açılır ve kapanır', (tester) async {
       await openRegister(tester);
 
       await tapText(tester, 'KVKK metnini oku');
       await tester.pumpAndSettle();
 
       expect(find.text('KVKK Aydınlatma Metni'), findsOneWidget);
+      expect(find.text('7. Haklarınız (KVKK md. 11)'), findsOneWidget);
       await tapText(tester, 'Kapat');
       await tester.pumpAndSettle();
       expect(find.text('KVKK Aydınlatma Metni'), findsNothing);
+      expect(
+        find.text('Şifre tekrarı'),
+        findsOneWidget,
+      ); // kayıt ekranına dönüldü
     });
   });
 }

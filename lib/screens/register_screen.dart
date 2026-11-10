@@ -11,6 +11,7 @@ import '../widgets/header_band.dart';
 import '../widgets/message_box.dart';
 import '../widgets/password_field.dart';
 import '../widgets/primary_button.dart';
+import 'kvkk_screen.dart';
 
 /// Kartın, üstteki bandın üzerine ne kadar bineceği.
 const double _cardOverlap = 40;
@@ -104,23 +105,10 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
     setState(() => _accepted = !_accepted);
   }
 
-  Future<void> _showKvkkText() {
-    return showDialog<void>(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text('KVKK Aydınlatma Metni'),
-        content: const SingleChildScrollView(
-          // TODO: Gerçek KVKK aydınlatma metni eklenecek.
-          child: Text('KVKK metni buraya eklenecek.'),
-        ),
-        actions: [
-          FilledButton(
-            onPressed: () => Navigator.of(context).pop(),
-            child: const Text('Kapat'),
-          ),
-        ],
-      ),
-    );
+  void _showKvkkText() {
+    Navigator.of(
+      context,
+    ).push(MaterialPageRoute<void>(builder: (_) => const KvkkScreen()));
   }
 
   @override
