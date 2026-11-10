@@ -1,4 +1,4 @@
-package com.example.ilac_takip
+package com.canerkutluk.ilactakip
 
 import io.flutter.embedding.android.FlutterActivity
 

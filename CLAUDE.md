@@ -17,6 +17,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 - Font: the bundled **Atkinson Hyperlegible Next** (`assets/fonts/`, OFL). `ThemeData.fontFamily` does *not* reach `ButtonStyle.textStyle`, so any `TextStyle` passed to a button style must set `fontFamily: AppTheme.fontFamily` (the theme's `textTheme` styles already do).
 - Tests: `test/auth_screens_test.dart` drives the real app through `IlacTakipApp` and needs `pump(Duration(seconds: 1))` to get past the fake delay (`pumpAndSettle` alone hangs while a spinner is visible). After an error disappears, call `pumpAndSettle` before counting messages, because the fading-out box is still in the tree for a moment. `MaterialApp` is localized to Turkish via `flutter_localizations`.
 
+Package / bundle ID is **`com.canerkutluk.ilactakip`** (Android `applicationId` + `namespace`, iOS `PRODUCT_BUNDLE_IDENTIFIER`). It is deliberately independent of the display name, and Firebase apps are registered under it, so don't change it.
+
 Target platforms are **Android and iOS only**. The web, windows, linux and macos folders were deliberately removed, so don't re-add them (e.g. avoid a bare `flutter create .`, which regenerates every platform).
 
 ## Commands
