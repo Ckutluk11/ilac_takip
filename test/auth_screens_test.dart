@@ -95,7 +95,14 @@ void main() {
 
       expect(find.text('Merhaba, ayse'), findsOneWidget);
 
+      // Çıkış, Hesabım ekranından ve onay sorusundan sonra yapılır.
+      await tapText(tester, 'Hesabım');
+      await tester.pumpAndSettle();
+      expect(find.text('ayse@ornek.com'), findsOneWidget);
       await tapText(tester, 'Çıkış Yap');
+      await tester.pumpAndSettle();
+      expect(find.text('Çıkış yapılsın mı?'), findsOneWidget);
+      await tester.tap(find.widgetWithText(FilledButton, 'Çıkış Yap'));
       await tester.pumpAndSettle();
 
       expect(find.text('Giriş Yap'), findsOneWidget);

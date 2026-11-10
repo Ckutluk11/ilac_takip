@@ -1,9 +1,9 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:ilac_takip/screens/home_screen.dart';
+import 'package:ilac_takip/screens/tabs/today_tab.dart';
 
 void main() {
   test('selamlama günün saatine göre değişir', () {
-    String at(int hour) => HomeScreen.greetingFor(DateTime(2026, 1, 1, hour));
+    String at(int hour) => TodayTab.greetingFor(DateTime(2026, 1, 1, hour));
 
     expect(at(5), 'Günaydın!');
     expect(at(10), 'Günaydın!');

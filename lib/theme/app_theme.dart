@@ -227,6 +227,37 @@ abstract final class AppTheme {
       progressIndicatorTheme: const ProgressIndicatorThemeData(
         color: AppColors.primary,
       ),
+      // Alt gezinme çubuğu: normalinden yüksek, yazılar her zaman görünür.
+      // Seçili sekme renk + dolu ikon + arka plan hapı + kalın yazıyla belli.
+      navigationBarTheme: NavigationBarThemeData(
+        height: 88,
+        backgroundColor: AppColors.surface,
+        elevation: 8,
+        shadowColor: AppColors.primaryDark,
+        surfaceTintColor: Colors.transparent,
+        indicatorColor: AppColors.primaryContainer,
+        labelBehavior: NavigationDestinationLabelBehavior.alwaysShow,
+        iconTheme: WidgetStateProperty.resolveWith(
+          (states) => IconThemeData(
+            size: 30,
+            color: states.contains(WidgetState.selected)
+                ? AppColors.primary
+                : AppColors.textSecondary,
+          ),
+        ),
+        labelTextStyle: WidgetStateProperty.resolveWith(
+          (states) => TextStyle(
+            fontFamily: fontFamily,
+            fontSize: 17,
+            fontWeight: states.contains(WidgetState.selected)
+                ? FontWeight.w800
+                : FontWeight.w600,
+            color: states.contains(WidgetState.selected)
+                ? AppColors.primary
+                : AppColors.textSecondary,
+          ),
+        ),
+      ),
     );
   }
 

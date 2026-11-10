@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../services/auth_providers.dart';
 import '../theme/app_theme.dart';
 import '../widgets/message_box.dart';
-import 'home_screen.dart';
 import 'login_screen.dart';
+import 'main_shell.dart';
 
 /// Oturum durumuna göre ekran seçer: kullanıcı varsa ana ekran,
 /// yoksa giriş ekranı. Giriş/çıkış yapılınca ekran kendiliğinden değişir;
@@ -19,7 +19,7 @@ class AuthGate extends ConsumerWidget {
 
     return authState.when(
       data: (user) =>
-          user == null ? const LoginScreen() : HomeScreen(user: user),
+          user == null ? const LoginScreen() : MainShell(user: user),
       loading: () =>
           const Scaffold(body: Center(child: CircularProgressIndicator())),
       error: (_, _) => const Scaffold(

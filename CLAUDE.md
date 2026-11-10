@@ -4,14 +4,17 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project state
 
-`ilac_takip` ("medication tracking" in Turkish) is a Flutter app. Implemented so far: login / register / temporary home screens backed by **Firebase Authentication** (email/password). drift, notifications, Firestore and Storage are not added yet. Update this file as real structure is introduced.
+`ilac_takip` ("medication tracking" in Turkish) is a Flutter app. Implemented so far: login / register screens, a 4-tab main shell with placeholder tabs, an account screen and a KVKK screen, backed by **Firebase Authentication** (email/password). drift, notifications, Firestore and Storage are not added yet. Update this file as real structure is introduced.
 
 ## Architecture
 
 - `lib/constants/app_info.dart`: app name (currently "Saatinde") and slogan. Never hard-code the name. If it changes, also update `android:label` in `AndroidManifest.xml` and `CFBundleDisplayName` in `ios/Runner/Info.plist` (they can't read Dart constants).
 - `lib/theme/app_theme.dart`: single source of colors (`AppColors`), sizes (`AppSizes`: min touch target 56, button height 64) and `AppTheme.light`. Use these and don't hard-code colors or sizes in screens.
 - `lib/services/`: `AuthService` is an interface (`auth_service.dart`). `auth_providers.dart` exposes it through Riverpod (`authServiceProvider`), and `authStateProvider` (a stream of `AppUser?`) drives navigation. The app uses `FirebaseAuthService` (name stored in the Firebase profile's `displayName`; it listens to `userChanges()` so the name shows up right after sign-up; Firebase error codes → Turkish via `authErrorMessage`). `FakeAuthService` (waits 1 s, always succeeds) is used **only in tests** via `authServiceProvider.overrideWithValue(...)`, because tests can't reach Firebase. Services throw `AuthException` with a user-facing Turkish message. `validators.dart` holds form rules + Turkish messages.
-- `lib/screens/auth_gate.dart`: root widget. It shows `LoginScreen` or `HomeScreen` based on `authStateProvider`. Screens never navigate on login/logout themselves. The exception is `RegisterScreen`, which is pushed and therefore pops itself (`popUntil(isFirst)`) after sign-up.
+- `lib/screens/auth_gate.dart`: root widget. It shows `LoginScreen` or `MainShell` based on `authStateProvider`. Screens never navigate on login/logout themselves. The exceptions are pushed screens, which pop themselves with `popUntil(isFirst)`: `RegisterScreen` after sign-up, and `AccountScreen` before sign-out (otherwise the pushed route would stay above the login screen).
+- `lib/screens/main_shell.dart`: the signed-in home. A `NavigationBar` with 4 tabs (Bugün / İlaçlarım / Geçmiş / Ailem, files in `lib/screens/tabs/`) inside an `IndexedStack`, so tab state survives switching. The bar's look lives in `AppTheme.light.navigationBarTheme` (height 88, labels always shown). The account screen isn't a tab: every tab header has an `AccountButton` ("Hesabım") that pushes `AccountScreen` (user info, KVKK, sign-out with a confirm dialog). Medicine-adding and the leaflet (prospektüs) are meant to be a button and a medicine-detail page, not tabs.
+- `lib/widgets/header_page.dart`: `HeaderPage` is the standard page layout (header band + content overlapping it + scrolling); `TabHeader` is a tab's title/subtitle + `AccountButton`. Use these for new screens. `EmptyState` (`lib/widgets/empty_state.dart`) is the "nothing here yet" content.
+- `lib/constants/kvkk_text.dart`: the KVKK aydınlatma metni as data, shown by `KvkkScreen`. It's a draft; update it whenever a new data type or service is added.
 - `lib/widgets/`: shared form pieces. Field errors are not Flutter's default `errorText`. They're shown in a `MessageBox` (icon + large text) below the field, and only after the first submit attempt. `AnimatedMessage` animates them in and out, honoring the OS "disable animations" setting.
 - Visual style: dark teal primary (`#00574B`). Screens use a `HeaderBand` (gradient top band, rounded bottom) with an `AppCard` overlapping it via `Transform.translate`.
 - Font: the bundled **Atkinson Hyperlegible Next** (`assets/fonts/`, OFL). `ThemeData.fontFamily` does *not* reach `ButtonStyle.textStyle`, so any `TextStyle` passed to a button style must set `fontFamily: AppTheme.fontFamily` (the theme's `textTheme` styles already do).
@@ -29,8 +32,8 @@ flutter pub get                      # install dependencies
 flutter run                          # run on the default device (Android emulator/device; pick one with -d <id>, list with `flutter devices`)
 flutter analyze                      # lint (flutter_lints via analysis_options.yaml)
 flutter test                         # run all tests
-flutter test test/widget_test.dart   # run a single test file
-flutter test --plain-name "Counter increments smoke test"  # run a single test by name
+flutter test test/main_shell_test.dart   # run a single test file
+flutter test --plain-name "alt çubukla sekmeler arasında geçilir"  # run a single test by name
 dart format .                        # format
 ```
 
