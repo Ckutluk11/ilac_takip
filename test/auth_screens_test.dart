@@ -98,7 +98,7 @@ void main() {
       // Çıkış, Hesabım ekranından ve onay sorusundan sonra yapılır.
       await tapText(tester, 'Hesabım');
       await tester.pumpAndSettle();
-      expect(find.text('ayse@ornek.com'), findsOneWidget);
+      expect(find.textContaining('ornek.com'), findsOneWidget);
       await tapText(tester, 'Çıkış Yap');
       await tester.pumpAndSettle();
       expect(find.text('Çıkış yapılsın mı?'), findsOneWidget);

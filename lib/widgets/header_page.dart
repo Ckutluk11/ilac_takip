@@ -28,11 +28,7 @@ class HeaderPage extends StatelessWidget {
     return SingleChildScrollView(
       child: Column(
         children: [
-          HeaderBand(
-            bottomPadding: overlap + 28,
-            // Tam genişlik: başlık kısa olsa da ortalanmasın, solda dursun.
-            child: SizedBox(width: double.infinity, child: header),
-          ),
+          HeaderBand(bottomPadding: overlap + 28, child: header),
           Transform.translate(
             offset: Offset(0, -overlap),
             child: Padding(

@@ -91,7 +91,9 @@ class AccountScreen extends ConsumerWidget {
                 _InfoRow(
                   icon: Icons.mail_outline_rounded,
                   label: 'E-posta',
-                  value: user?.email ?? '',
+                  // Sığmazsa kelimenin ortasından değil, @ işaretinden
+                  // önce alt satıra geçsin (görünmez bölme noktası).
+                  value: (user?.email ?? '').replaceAll('@', '​@'),
                 ),
               ],
             ),

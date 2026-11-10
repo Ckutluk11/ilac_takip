@@ -47,7 +47,10 @@ class HeaderBand extends StatelessWidget {
                     constraints: const BoxConstraints(
                       maxWidth: AppSizes.maxContentWidth,
                     ),
-                    child: child,
+                    // Tam genişlik: içerik kısa olsa bile ortaya kaymasın,
+                    // sola yaslı başlıklar solda dursun. (Ortalanması
+                    // gereken içerik, ör. logo, kendi içinde ortalanır.)
+                    child: SizedBox(width: double.infinity, child: child),
                   ),
                 ),
               ),
